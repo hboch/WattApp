@@ -5,38 +5,34 @@
 }
 
 <div class="container-fluid" id="divChat" style="padding-top:20px">
-    <input id="hiddenUserId" />@*type="hidden" />*@
-    <input id="hiddenUserName"/> @*type="hidden" />*@
+    <input id="hiddenUserId" type="hidden" />
+    <input id="hiddenUserName" type="hidden" />
     <div class="row">
-        <div class="col-xs-6" style="height:30px">
-            <div class="panel panel-primary">
-                <div class="panel-heading" id="accordion">
-                    <span class="glyphicon glyphicon-comment"></span> Chat
-                </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading" id="accordion">
+                <span class="glyphicon glyphicon-user"></span> Online
             </div>
-            <div class="panel-group">
-                <div class="panel-collapse">
-                    @*</div>style="height:550px">*@
-                    <ul id="messagesList" class="list-group"></ul>
-                </div>
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input id="inputMsg" type="text" class="form-control input-sm" placeholder="Nachricht hier eingeben ..." />
-                        <span class="input-group-btn">
-                            <input type="button" class="btn btn-warning btn-sm" id="btnSend" value="Senden" style="margin-right:10px" />                            
-                        </span>
-                    </div>
-                </div>
+            <div class="panel-collapse">
+                <ul id="usersList" class="list-group"></ul>
             </div>
         </div>
-        <div class="col-xs-3" style="height:60px">
-            <div class="panel panel-primary">
-                <div class="panel-heading" id="accordion">
-                    <span class="glyphicon glyphicon-user"></span> Online
-                </div>
-                <div class="panel-collapse">
-                    @*style="height:600px">*@
-                    <ul id="usersList" class="list-group"></ul>
+    </div>
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading" id="accordion">
+                <span class="glyphicon glyphicon-comment"></span> Chat
+            </div>
+        </div>
+        <div class="panel-group">
+            <div class="panel-collapse">
+                <ul id="messagesList" class="list-group" style="list-style: none"></ul>
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="inputMsg" type="text" class="form-control input-sm" placeholder="Nachricht hier eingeben ..." />
+                    <span class="input-group-btn">
+                        <input id="btnSend" type="button" class="btn btn-warning btn-sm" value="Senden" />
+                    </span>
                 </div>
             </div>
         </div>
