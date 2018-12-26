@@ -16,7 +16,7 @@ function GetElementValueById(elementId) {
 }
 
 function GetUserId() {
-	var userId = $("#hiddenUserId").val();
+	var userId = $("#hiddenUserId").val();	
 	return userId;
 }
 
@@ -51,19 +51,22 @@ connection.on("onMessageTyping", function (userId, userName) {
 	document.getElementById(userId).innerHTML = spanGlyphiconUser + userName + spanGlyphiconUserTyping;
 });
 
-
-connection.on("onConnected", (users, userName, userId) => {
+connection.on("onConnectedThisUser", (userId, userName) => {
 	$('#hiddenUserId').val(userId);
 	$('#hiddenUserName').val(userName);
+});
 
+connection.on("onConnected", (users) => {	
+	//Empty logged in user list before filling it again 
+	$("#usersList").empty();
 	for (var i = 0; i < users.length; ++i) {
 		$("#usersList").append($("<li class='list-group-item list-group-item-info' Id='" + users[i].userId + "'>").html(spanGlyphiconUser + users[i].name));
 	}
 });
 
-connection.on("onConnectedNewUser", (userName, userId) => {
-	$("#usersList").append($("<li class='list-group-item list-group-item-info' Id='" + userId + "'>").html(spanGlyphiconUser + userName));
-});
+//connection.on("onConnectedNewUser", (userId, userName) => {
+//	$("#usersList").append($("<li class='list-group-item list-group-item-info' Id='" + userId + "'>").html(spanGlyphiconUser + userName));
+//});
 
 connection.on("onDisconnected", (userId) => {
 	//$("#usersList li:contains('" + name + "')").remove();
@@ -76,7 +79,7 @@ connection.start().then(function () {
 
 document.getElementById("inputMsg").addEventListener("input", function (event) {
 	if (IsNullOrWhiteSpace(this.value)) {
-		ClearTypingIcon(userId, GetUserName());
+		ClearTypingIcon(GetUserId(), GetUserName());
 	}
 	else {
 		connection.invoke("MessageTyping", GetUserId(), GetUserName()).catch(function (err) {
@@ -84,7 +87,8 @@ document.getElementById("inputMsg").addEventListener("input", function (event) {
 		});
 	}
 });
-document.getElementById("btnSend").addEventListener("click", function (event) {
+
+document.getElementById("btnSend").addEventListener("click", function (event) {	
 	connection.invoke("MessageSend", GetUserId(), GetUserName(), GetMessage()).catch(function (err) {
 		return console.error(err.toString());
 	});
@@ -94,11 +98,11 @@ document.getElementById("btnSend").addEventListener("click", function (event) {
 	ClearMessageInput();
 });
 
-document.getElementById("btnExitChat").addEventListener("click", function (event) {
-	connection.invoke("Disconnect").catch(err => console.error(err.toString()));
-	connection.stop()
-	$('#hiddenId').val('');
-	$('#hiddenUserName').val('');
-	$("#usersList").empty();
-	$("#messagesList").empty();	
-});
+//document.getElementById("btnExitChat").addEventListener("click", function (event) {
+//	connection.invoke("Disconnect").catch(err => console.error(err.toString()));
+//	connection.stop()
+//	$('#hiddenId').val('');
+//	$('#hiddenUserName').val('');
+//	$("#usersList").empty();
+//	$("#messagesList").empty();
+//});

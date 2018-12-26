@@ -5,10 +5,10 @@
 }
 
 <div class="container-fluid" id="divChat" style="padding-top:20px">
-    <input id="hiddenUserId" type="hidden" />
-    <input id="hiddenUserName" type="hidden" />
+    <input id="hiddenUserId" />@*type="hidden" />*@
+    <input id="hiddenUserName"/> @*type="hidden" />*@
     <div class="row">
-        <div class="col-xs-9" style="height:60px">
+        <div class="col-xs-6" style="height:30px">
             <div class="panel panel-primary">
                 <div class="panel-heading" id="accordion">
                     <span class="glyphicon glyphicon-comment"></span> Chat
@@ -23,14 +23,13 @@
                     <div class="input-group">
                         <input id="inputMsg" type="text" class="form-control input-sm" placeholder="Nachricht hier eingeben ..." />
                         <span class="input-group-btn">
-                            <input type="button" class="btn btn-warning btn-sm" id="btnSend" value="Senden" style="margin-right:10px" />
-                            <input type="button" class="btn btn-danger btn-sm" id="btnExitChat" value="Chat verlassen" />
+                            <input type="button" class="btn btn-warning btn-sm" id="btnSend" value="Senden" style="margin-right:10px" />                            
                         </span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-3" style="height:600px">
+        <div class="col-xs-3" style="height:60px">
             <div class="panel panel-primary">
                 <div class="panel-heading" id="accordion">
                     <span class="glyphicon glyphicon-user"></span> Online
