@@ -16,7 +16,7 @@ function GetElementValueById(elementId) {
 }
 
 function GetUserId() {
-	var userId = $("#hiddenUserId").val();	
+	var userId = $("#hiddenUserId").val();
 	return userId;
 }
 
@@ -33,6 +33,10 @@ function ClearMessageInput() {
 	document.getElementById("inputMsg").value = "";
 }
 
+function AddMessageInput(stringToAdd) {
+	document.getElementById("inputMsg").value = document.getElementById("inputMsg").value + stringToAdd;
+}
+
 function ClearTypingIcon(userId, userName) {
 	document.getElementById(userId).innerHTML = spanGlyphiconUser + userName;
 }
@@ -40,10 +44,10 @@ function ClearTypingIcon(userId, userName) {
 connection.on("onMessageReceive", function (userId, userName, message) {
 	ClearTypingIcon(userId, userName)
 
-	var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+	var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/(?:\r\n|\r|\n)/g, '<br />');
 	var encodedMsg = userName + ": " + msg;
 	var li = document.createElement("li");
-	li.textContent = encodedMsg;
+	li.innerHTML  = encodedMsg;
 	document.getElementById("messagesList").appendChild(li);
 });
 
@@ -56,7 +60,7 @@ connection.on("onConnectedThisUser", (userId, userName) => {
 	$('#hiddenUserName').val(userName);
 });
 
-connection.on("onConnected", (users) => {	
+connection.on("onConnected", (users) => {
 	//Empty logged in user list before filling it again 
 	$("#usersList").empty();
 	for (var i = 0; i < users.length; ++i) {
@@ -78,6 +82,9 @@ connection.start().then(function () {
 });
 
 document.getElementById("inputMsg").addEventListener("input", function (event) {
+	$(".emoji-list").removeClass('hidden');
+	$(".emoji-list").slideUp(500);
+
 	if (IsNullOrWhiteSpace(this.value)) {
 		ClearTypingIcon(GetUserId(), GetUserName());
 	}
@@ -88,7 +95,7 @@ document.getElementById("inputMsg").addEventListener("input", function (event) {
 	}
 });
 
-document.getElementById("btnSend").addEventListener("click", function (event) {	
+document.getElementById("btnSend").addEventListener("click", function (event) {
 	connection.invoke("MessageSend", GetUserId(), GetUserName(), GetMessage()).catch(function (err) {
 		return console.error(err.toString());
 	});
@@ -106,3 +113,36 @@ document.getElementById("btnSend").addEventListener("click", function (event) {
 //	$("#usersList").empty();
 //	$("#messagesList").empty();
 //});
+
+
+document.getElementById("BtnEmoji").addEventListener("click", function (event) {
+	//var container = $(".emoji-list");
+	//if (!container.hasClass('hidden')) {
+	//	container.addClass('hidden');
+	//	//container.slideDown(500);
+	//}
+	//else {
+	//	container.removeClass('hidden');
+	//	//container.slideUp(500);
+	//}
+	document.getElementById("myEmojilist").classList.toggle("show");
+});
+
+document.getElementById("myEmojilist").addEventListener("click", function (event) {
+	// eventtarget is the clicked element!
+	// If it was a list item
+	if (event.target && event.target.nodeName == "LI") {
+		// List item found!  Add list item text to message input
+		AddMessageInput(event.target.textContent);
+	}
+});
+//function () {
+//	$("#myEmojilist li").click(function () {
+//		var mm = $(this).text();
+//		var textVal = $("#TxtEmoji").val();
+//		$("#TxtEmoji").val(textVal + mm);
+//		$(".emoji-list").removeClass('hidden');
+//		$(".emoji-list").slideUp(500);
+//	});
+//});
+

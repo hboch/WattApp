@@ -35,3 +35,37 @@ body {
         display: none;
     }
 }
+
+/* custom Emoji picker styles*/
+.emojibox {
+    display: inline-block;
+    position: relative;
+    float: left;
+}
+
+.btnemoji {
+    width: auto;
+    height: auto;
+    float: right;
+    border: none;
+    background: none;
+    outline: none;
+}
+
+.emoji-list {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: hidden;
+    /*overflow: auto;*/
+    border: 1px solid #ddd;
+    z-index: 1;
+}
+
+    .emoji-list li {
+        float: left;
+        font-size: 16px;
+        margin: 0 10px 0 10px;
+        cursor: pointer;
+    }
